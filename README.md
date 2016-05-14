@@ -1,11 +1,19 @@
-# Web App Boilerplate
-This project is my personal boilerplate for Single Page Web App.
+# Burst Starter Kit
+This project is my personal starter kit for a single page web app.
 
-Major Libraries include:
+Client libraries include:
 * React
 * Redux
  * Redux Thunk - Create actions that return a thunk. Great for async actions.
  * Reselect - Memoize selectors to help reduce renders in your react tree
+ * Redux Logger - Console logging of actions
 * React Router
- * React Redux Router - Keep route in the store and use actions to navigate from other actions.
+ * React Router Redux - Keep route in the store and use actions to navigate from other actions.
 * Lodash
+
+
+# Build
+Builds are done with gulp. Bundling is handled by Webpack, and transpiling from ES2015 is done by Babel. 
+
+# Server
+It includes a lightweight express server using handlebars to render the initial page.

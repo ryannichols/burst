@@ -15,7 +15,6 @@
     "node": "4.4.3"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
     "ejs": "^2.4.1",
     "express": "^4.13.3",
     "handlebars": "^4.0.5",
@@ -30,7 +29,8 @@
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
-    "reselect": "^2.5.1"
+    "reselect": "^2.5.1",
+    "classnames": "^2.2.5"
   },
   "devDependencies": {
     "babel-core": "^6.7.7",
