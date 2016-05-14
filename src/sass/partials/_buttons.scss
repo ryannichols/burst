@@ -1,0 +1,184 @@
+
+/* BUTTONS
+-----------------------------*/
+
+.btn {
+  position: relative;
+  display: inline-block;
+
+  border: none;
+
+  color: $font-color-white;
+  font-family: $font-title;
+  font-weight: $weight-bold;
+  text-transform: uppercase;
+  
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+
+  outline: none;
+  cursor: pointer;
+
+  transition: all .25s;
+
+  i {
+    top: 1px;
+    margin: 0;
+    margin-left: -2%;
+  }
+
+  &,
+  &.main {
+    background-color: $color-primary;
+  }
+
+  &.sub {
+    background-color: $color-light-grey;
+  }
+
+
+  // Default size
+  &,
+  &.m {
+    border-radius: 0;
+    font-size: .875rem;
+    line-height: .875rem;
+    padding: .75rem 1rem;
+
+    i {
+      font-size: 1.125rem;
+      line-height: 1.125rem;
+      margin-right: .5rem;
+    }
+  }
+
+
+  // Other sizes
+  &.xs {
+    border-radius: 0;
+    font-size: .5rem;
+    line-height: .5rem;
+    padding: .375rem .75rem;
+
+    i {
+      font-size: .75rem;
+      line-height: .75rem;
+      margin-right: .375rem;
+    }
+  }
+
+  &.s {
+    border-radius: 0;
+    font-size: .75rem;
+    line-height: .75rem;
+    padding: .5rem .75rem;
+
+    i {
+      font-size: .875rem;
+      line-height: .875rem;
+      margin-right: .375rem;
+    }
+  }
+
+  &.l {
+    font-size: 1rem;
+    line-height: 1rem;
+    padding: .875rem 1.375rem;
+
+    i {
+      font-size: 1.25rem;
+      line-height: 1.25rem;
+      margin-right: .5rem;
+      margin-left: -3%;
+    }
+  }
+
+  &.xl {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+    padding: 1rem 1.5rem;
+    i {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+      margin-right: .5rem;
+      margin-left: -3%;
+    }
+  }
+}
+
+.btn.tx {
+  background-color: transparent;
+  color: $font-color-light;
+  padding: .5rem !important;
+  text-transform: capitalize;
+
+  &:hover {
+    color: $color-primary-light;
+  }
+}
+
+.btn.c,
+.btn.o {
+
+  border-radius: 50%;
+  padding: 0;
+
+  i {
+    top: 0;
+    margin: 0;
+  }
+
+  // Default
+  &,
+  &.m {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  &.xs {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &.s {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &.l {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  &.xl {
+    width: 4.25rem;
+    height: 4.25rem;
+  }
+}
+
+.btn.c {
+  color: $font-color-white;
+
+  &:hover {
+    color: $color-primary-light;
+  }
+}
+
+.btn.o {
+  border: 1px solid $color-primary;
+  background-color: transparent;
+  color: $font-color-med;
+
+  &:hover {
+    color: $color-primary-light;
+  }
+}
+
+.row > .btn  {
+  margin-right: .75rem;
+  &:last-child {
+    margin-right: 0;
+  }
+}

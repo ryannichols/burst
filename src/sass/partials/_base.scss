@@ -1,0 +1,68 @@
+
+
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+    &.noscroll {
+        position: fixed;
+        width: 100%;
+        top:0;
+        left: 0;
+        height: 100%;
+        overflow-y: scroll !important;
+        z-index: 10;
+    }
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+* {
+    position: relative;
+    box-sizing: border-box;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+
+audio,
+canvas,
+img,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+

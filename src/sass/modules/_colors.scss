@@ -1,0 +1,60 @@
+
+/* BASE COLORS 
+-----------------------------*/
+$color-primary: #0f599f;
+$color-primary-dark: darken($color-primary, 5%); 
+$color-primary-light: lighten($color-primary, 20%);
+
+$color-secondary: #242f38; //Dark grey
+$color-secondary-dark: #242f38;
+$color-secondary-light: #242f38;
+
+$color-tertiary: #242f38; //Dark grey
+$color-tertiary-dark: #242f38; //Dark grey
+$color-tertiary-light: #242f38; //Dark grey
+
+$color-black: #000;
+$color-dark-grey: #25252b;
+$color-grey: #50546b;
+$color-med-grey: #6d7d8a;
+$color-light-grey: #a9b2b8;
+$color-extra-light-grey: #ccd4d9;
+$color-super-light-grey: #d9dde0;
+$color-ultra-light-grey: #ebeef0;
+
+$color-white: #ffffff;
+
+/* Page / Backgrounds
+-----------------------------*/
+
+$color-page: #ffffff;
+$color-page-grey: #eaeef1;
+
+/* LINES / BORDERS
+-----------------------------*/
+
+$line-dark: $color-secondary;
+$line-med: #333;
+$line-light: #eee;
+$line-extra-light: #efefef;
+
+
+/* TYPE 
+-----------------------------*/
+
+$font-color-body: $color-primary;
+$font-color-title: $color-primary;
+$font-color-sub: $color-primary;
+$font-color-link: $color-secondary;
+
+$font-color-white: $color-white;
+$font-color-extra-light: $color-primary;
+$font-color-light: $color-primary;
+$font-color-med: $color-primary;
+$font-color-dark: $color-primary;
+
+$font-color-error: $color-black;
+$font-color-success: $color-black;
+
+$color-select-back: #000;
+$color-select-type: #fff;

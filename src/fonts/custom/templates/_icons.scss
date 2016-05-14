@@ -1,0 +1,10 @@
+[data-icon]:before { content: attr(data-icon); }
+
+[data-icon]:before,
+<%= glyph_selectors %> {
+<%= glyph_properties %>
+}
+
+<%= glyphs %>
+<% @glyphs.each do |name, value| %>
+$icons-<%= name.to_s %>: "\<%= value[:codepoint].to_s(16) %>";<% end %>

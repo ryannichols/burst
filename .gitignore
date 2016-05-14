@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+
+# Local development
+*.env
+*.dev
+*.pyc
+.DS_Store
+/.sass-cache
+/*.sublime-workspace
+
+static/css/styles.css
