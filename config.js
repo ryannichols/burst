@@ -1,10 +1,10 @@
 
 // config for the node server can go here
 module.exports = {
-  server {
+  server: {
     port: 8000,
     distPath: '/static',
-    viewPath: '/static',
+    viewPath: '/views',
     entryView: 'index',
   }
 }
