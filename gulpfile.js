@@ -62,13 +62,19 @@ gulp.task('js', function (cb) {
   return gulp.src(paths.js_start)
     .pipe(webpack(webPackConfig))
     .pipe(gulp.dest(paths.js_dest))
+    .on("error", function (err) {
+      throw new gutil.PluginError("js", displayError(err));
+    });
 });
 
 
 
 gulp.task("clean", function () {
   return gulp.src(paths.clean, {read: false})
-    .pipe(clean());
+    .pipe(clean())
+    .on("error", function (err) {
+      throw new gutil.PluginError("clean", displayError(err));
+    });
 });
 
 gulp.task('build', ['clean'], function(cb) {

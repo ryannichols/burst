@@ -17,9 +17,6 @@ const RouteActions = {
 }
 
 const RouteState = {
-  /* SPEC */
-  spec: {},
-
   // We use the reducer supplied by redux-router
   reducer: routerReducer,
 

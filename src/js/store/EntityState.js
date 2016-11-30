@@ -31,6 +31,15 @@ const DeleteActions = {
 };
 const DeleteActionKeys = _.keys(DeleteActions);
 
+function headersForAuth(userState, getState) {
+  if(!userState && !getState) 
+    return null;
+  userState = userState ? userState : getState().entities.currentUser;
+  return {
+    "X-Auth-User": userState.user_id,
+    "X-Auth-Token": userState.token,
+  };
+}
 
 function getOperation(action, entity_type) {
   if(_.includes(DeleteActionKeys, action.type) && DeleteActions[action.type] === entity_type) {
@@ -49,8 +58,14 @@ function getOperation(action, entity_type) {
 const EntityActions = {
   /*
   EXAMPLE
-  fetchLive() {
-    return dispatch => get("/live/list", null, dispatch, FETCH_LIVE);
+  getUserDetails(id) {
+    return (dispatch, getState) => get({
+      url: "/user/:id", 
+      params: { id }, 
+      dispatch, 
+      action: FETCH_USER,
+      host: selectPublicHost(getState()),
+    });
   },
   */
 };

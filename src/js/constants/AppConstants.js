@@ -5,6 +5,16 @@ export const VersionInfo = {
   version: 2,
   build: 1,
 }
+
+export const DEFAULT_ENV = 'BETA';
+export const Hosts = {
+  PROD: {
+    PUBLIC: 'https://api.sliver.tv/v1',
+  },
+  BETA: {
+    PUBLIC: 'https://beta-api.sliver.tv/v1',
+  },
+}
 export const Paths = {
   HOME: "/",
 }

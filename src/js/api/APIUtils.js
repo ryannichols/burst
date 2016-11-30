@@ -2,22 +2,36 @@ import _ from 'lodash';
 import { URLUtils } from 'utils/Utils';
 import crypto from 'crypto';
 
-import { RequestState } from 'constants/AppConstants';
-var { REQUEST, SUCCESS, FAIL } = RequestState;
+import { 
+  RequestState,
+  Hosts,
+  DEFAULT_ENV } from 'constants/AppConstants';
+var { 
+  REQUEST, 
+  SUCCESS, 
+  FAIL } = RequestState;
 
-export const REST_HOST = 'https://beta-api.sliver.tv';
-export const REST_URI = '/v1';
-export const REST_PREFIX = REST_HOST+REST_URI;
 export const S3_BUCKET_URL = "";
 export const S3_BUCKET_UPLOAD_URL = "";
 
 
 
-function _fetch(url, params, method, dispatch, action, body) {
+function _fetch(opt, params, method, dispatch, action, body, headers, host) {
+  var url = opt;
+  if(_.isObject(opt)) {
+    url = opt.url;
+    params = opt.params ? opt.params : params; 
+    method = opt.method ? opt.method : method;
+    dispatch = opt.dispatch;
+    action = opt.action;
+    body = opt.body;
+    headers = opt.headers;
+    host = opt.host ? opt.host : host;
+  } 
   if(dispatch && action) {
-      dispatch(request(action, url, params));  
+      dispatch(request(action, url, params, body));  
   }
-  return fetch(restUrl(url, params), fetchInit(method, body))
+  return fetch(restUrl(url, params, host), fetchInit(method, body, headers))
     .then(response => response.json())
     .then(json => {
       if(!json) {
@@ -25,27 +39,45 @@ function _fetch(url, params, method, dispatch, action, body) {
         if(dispatch && action) {
           dispatch(error(action, {error:err}, url, params));
         } 
-        return Promise.reject(err);
-      } else if(json.error) {
+        return Promise.reject({errorMessage:err});
+      } else if(json.errorCode || _.get(json, 'body.error_code') || json.status === "ERROR") {
         if(dispatch && action) {
-          dispatch(error(action, _.pick(json, ['error', 'error_code', 'error_fields']),  url, params));
+          dispatch(error(action, _.pick(json, ['errorCode', 'errorMessage']), url, params));
         }
-        return Promise.reject(json.error);
-      } 
+        return Promise.reject({
+          errorMessage: json.errors || json.errorMessage,
+          errorCode: json.errorCode
+        });
+      } else if(json.code && json.code != 200) {
+        if(dispatch && action) {
+          dispatch(error(action, _.pick(json, ['code', 'message']),  url, params));
+        }
+        return Promise.reject({
+          errorMessage: `code ${json.code}: ${json.message}`
+        });
+      }
       if(dispatch && action) {
         dispatch(receive(action, json, url, params));
       }
+      json.headers = headers;
       return json;
     })
-    .catch(err => {
-      console.log("ERROR IN FETCH RESPONSE: ", err);
-    });
+    //.catch(err => {
+    //  console.log("ERROR IN FETCH RESPONSE: ", err);
+    //  return Promise.reject(err);
+    //});
 }
-export function get(url, params, dispatch, action) {
-  return _fetch(url, params, 'get', dispatch, action);
+export function get(url, params, dispatch, action, body, headers, host = Hosts[DEFAULT_ENV].PUBLIC) {
+  return _fetch(url, params, 'get', dispatch, action, body, headers, host);
 }
-export function post(url, params, dispatch, action, body) {
-  return _fetch(url, params, 'post', dispatch, action, body);
+export function post(url, params, dispatch, action, body, headers, host = Hosts[DEFAULT_ENV].PUBLIC) {
+  return _fetch(url, params, 'post', dispatch, action, body, headers, host);
+};
+export function put(url, params, dispatch, action, body, headers, host = Hosts[DEFAULT_ENV].PUBLIC) {
+  return _fetch(url, params, 'put', dispatch, action, body, headers, host);
+};
+export function del(url, params, dispatch, action, body, headers, host = Hosts[DEFAULT_ENV].PUBLIC) {
+  return _fetch(url, params, 'delete', dispatch, action, body, headers, host);
 };
 
 export function request(action, url, params) {
@@ -80,45 +112,23 @@ export function error(action, error, url, params) {
   }
 }
 
-export function fetchInit(method = 'get', body) {
-  var formData = null
-  if (body) {
-    // method must be post to send body
-    method = 'post'
-    formData = new FormData();
-    // output body in extended query string format
-    // {a: 1, b: [2, 3], c: {a: 4, b: 5}} => a=1&b[0]=2&b[1]=3&c[a]=4&c[b]=5
-    // {a: 1, d: [{a: 2, b: 3}, {a: 4, b: 5}]} => a=1&d[0][a]=2&d[0][b]=3&d[1][a]=4&d[1][b]=5
-    function appendFormData(rootKey, obj) {
-      if (_.isArray(obj)) {
-        _.forEach(obj, (value, ndx) => {
-          appendFormData(rootKey + '[' + ndx + ']', value);
-        });
-      } else if (_.isObject(obj)) {
-        _.forOwn(obj, (value, key) => {
-          appendFormData(rootKey + '[' + key + ']', value);
-        });
-      } else {
-        formData.append(rootKey, obj);
-      }
-    }
-    _.forOwn(body, (value, key) => {
-      appendFormData(key, value);
-    });
-    return {
-      method,
-      credentials: 'include',
-      body: formData
-    }
-  }
-  return {
+export function fetchInit(method = 'get', body, headers = {}) {
+  headers = _.assign(headers, {
+    'Content-Type': 'application/json',
+  });
+  let init = {
     method,
+    headers,
     mode: 'cors',
-  }
-
+  };
+  init = body ? _.assign(init, {body: JSON.stringify(body)}) : init;
+  return init;
 }
-export function restUrl(url, params, urlMap) {
-  return URLUtils.mergeUrl(REST_PREFIX + url, params, urlMap);
+export function restUrl(url, params, host) {
+  if(url.indexOf("http") !== -1) {
+    return URLUtils.mergeUrl(url, params, urlMap);
+  }
+  return URLUtils.mergeUrl(host + url, params);
 }
 
 
